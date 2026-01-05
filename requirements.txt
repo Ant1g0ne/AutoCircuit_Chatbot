@@ -1,0 +1,5 @@
+fuzzywuzzy
+pandas
+openai
+streamlit
+python-dotenv
