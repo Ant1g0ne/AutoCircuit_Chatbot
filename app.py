@@ -1,8 +1,6 @@
-# app.py
 import random
 import streamlit as st
 from collections import Counter
-
 from utils import (
     load_data,
     load_keywords,
@@ -122,7 +120,7 @@ if res is None or res.empty:
     st.stop()
 
 # =========================
-# 已选条件展示（UX 核心）
+# 已选条件展示（UX 核心） 
 # =========================
 st.markdown("### ✅ 已选择条件")
 if st.session_state.current_search_entry["brand"]:
@@ -135,13 +133,11 @@ if not st.session_state.current_search_entry["brand"] and not st.session_state.c
 # =========================
 # 第一轮：品牌
 # =========================
-# 第一轮：品牌
 if st.session_state.current_search_entry["brand"] is None:
     st.subheader("请选择品牌")
     brands = [extract_brand(p) for p in res["层级路径"] if extract_brand(p)]
     counter = Counter(brands).most_common(5)
 
-    # 确保有至少 1 列
     num_cols = max(1, len(counter))  # 如果 counter 为空，至少为 1 列
     cols = st.columns(num_cols)
 
@@ -149,14 +145,11 @@ if st.session_state.current_search_entry["brand"] is None:
         with cols[i]:
             if st.button(f"{b}（{c}）"):
                 st.session_state.current_search_entry["brand"] = b
-                # 仅在选择品牌后才更新历史记录
                 if st.session_state.current_search_entry["brand"] and st.session_state.current_search_entry["model"]:
                     st.session_state.search_history.append(st.session_state.current_search_entry.copy())
                 st.rerun()  # 改为 st.rerun()
 
-# =========================
 # 应用品牌过滤
-# =========================
 if st.session_state.current_search_entry["brand"]:
     res = res[res["层级路径"].str.contains(st.session_state.current_search_entry["brand"])]
 
@@ -174,14 +167,11 @@ if st.session_state.current_search_entry["brand"] and st.session_state.current_s
             with col:
                 if st.button(f"{m}（{c}）"):
                     st.session_state.current_search_entry["model"] = m
-                    # 仅在选择型号后才更新历史记录
                     if st.session_state.current_search_entry["brand"] and st.session_state.current_search_entry["model"]:
                         st.session_state.search_history.append(st.session_state.current_search_entry.copy())
                     st.rerun()  # 改为 st.rerun()
 
-# =========================
 # 应用型号过滤
-# =========================
 if st.session_state.current_search_entry["model"]:
     res = res[res["层级路径"].str.contains(st.session_state.current_search_entry["model"])]
 
@@ -210,7 +200,7 @@ with st.expander("🕒 搜索历史", expanded=True):
         st.caption("没有搜索历史。")
 
 # =========================
-# keywords 抽测（保持原样）
+# keywords 抽测（保持原样） 
 # =========================
 with tab2:
     try:
