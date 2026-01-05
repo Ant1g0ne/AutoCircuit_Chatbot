@@ -1,0 +1,10 @@
+# Ignore the virtual environment
+venv/
+.env/
+
+# Ignore Python bytecode
+*.pyc
+__pycache__/
+
+# Ignore any other files you don't want to track
+.DS_Store  # For macOS users
