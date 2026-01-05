@@ -33,16 +33,16 @@ for key, default in {
 with st.sidebar:
     st.header("数据配置")
     csv_path = st.text_input("资料清单.csv 路径", value=DATA_CSV_DEFAULT)
-    kw_path = st.text_input("keywords.txt 路径", value=KEYWORDS_TXT_DEFAULT)
 
     st.divider()
     st.header("检索参数")
-    k = st.slider("最终返回条数 k", 1, 10, 5)
-    candidate_pool = st.slider("候选池 candidate_pool", 30, 200, 100, step=10)
-    min_score = st.slider("最低分 min_score", 0, 100, 55, step=1)
+    st.caption("根据您的需求调整检索参数。")
+    k = st.slider("最终返回条数 k", 1, 10, 5, help="设置返回的文档数量")
+    candidate_pool = st.slider("候选池大小", 30, 200, 100, step=10, help="候选文档池大小")
+    min_score = st.slider("最低相关性分数", 0, 100, 55, step=1, help="设置最低相关性分数")
 
     st.divider()
-    use_llm = st.checkbox("启用 LLM 意图辅助（可回退）", value=False)
+    use_llm = st.checkbox("启用 LLM 意图辅助", value=False, help="启用 GPT-4o-mini 解析用户输入，提升检索精度")
 
     st.divider()
     if st.button("🔄 重新开始"):
@@ -198,30 +198,3 @@ with st.expander("🕒 搜索历史", expanded=True):
             st.markdown("---")
     else:
         st.caption("没有搜索历史。")
-
-# =========================
-# keywords 抽测（保持原样） 
-# =========================
-with tab2:
-    try:
-        keywords = load_keywords(kw_path)
-    except Exception as e:
-        st.error(e)
-        st.stop()
-
-    n = st.slider("抽测数量", 5, 50, 20, step=5)
-    seed = st.number_input("随机种子", value=42, step=1)
-
-    if st.button("开始抽测"):
-        random.seed(seed)
-        for i, q in enumerate(random.sample(keywords, k=min(n, len(keywords))), 1):
-            st.markdown(f"### {i}. {q}")
-            res = search_topk(
-                df,
-                query=q,
-                k=k,
-                candidate_pool=candidate_pool,
-                min_score=min_score,
-                use_llm_intent=use_llm,
-            )
-            st.dataframe(res, use_container_width=True)
