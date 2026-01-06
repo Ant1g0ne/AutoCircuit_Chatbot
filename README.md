@@ -1,5 +1,6 @@
 ⚡ AutoCircuit Pro | 智能车辆电路图导航助手
 AutoCircuit Pro 是一个基于大语言模型（LLM）的垂直领域知识库检索系统。它专为解决非标准化搜索痛点而设计，能够通过意图识别、智能纠错、多轮状态机引导，帮助用户从海量 CSV 资料库中精准定位车辆电路图文档。
+线上应用URL : https://autocircuitchatbot-8tbvej2pwkedvm78k6fcff.streamlit.app/
 
 🚀 核心特性 (Key Features)
 🧠 1. 深度语义理解 (LLM-Powered)
@@ -88,4 +89,5 @@ graph TD
 
 
 Developed by Ant1g0ne
+
 
