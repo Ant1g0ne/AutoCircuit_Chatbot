@@ -1,6 +1,6 @@
-fuzzywuzzy
-python-Levenshtein
-pandas
-openai
 streamlit
-python-dotenv
+pandas
+fuzzywuzzy
+python-levenshtein
+openai
+watchdog
